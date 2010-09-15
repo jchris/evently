@@ -72,11 +72,11 @@
 		test('mustache', function() {
 			stop();
 			$("#mustache-fu").evently({
-			  	click:{ data: {name:'handsome'}, mustache:'Hello {{name}}'}
+			  	click:{ data: {name:'handsome'}, mustache:'<p>Hello {{name}}</p>'}
 			});
 			$("#mustache-fu").trigger('click');
 			start();
-			equals($("#mustache-fu")[0].innerText, 'Hello handsome');
+			equals($("#mustache-fu").text(), 'Hello handsome');
 		});
 		
 		// test nested selector love
@@ -84,13 +84,13 @@
 		// TODO vulcan mind meld jchris to extract the magic tokens... like failing _init test below... and _changes
 		// http://www.youtube.com/watch?v=4UMxWrwPeto		
 		test('_init magic', function() {
-			var tmpl = "Hello world";
+			var tmpl = "<p>Hello world</p>";
 			stop();
 			$("#init-magic").evently({ 
 				_init: { mustache:tmpl }
 			});
 			start();
-			equals($("#init-magic")[0].innerText, tmpl)
+			equals($("#init-magic").html(), tmpl)
 		});
 	</script>
 </body>
