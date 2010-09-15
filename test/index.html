@@ -13,6 +13,9 @@
 	<div id="qunit-fixture">test markup</div>
 	
 	<div id="test-yehuda-data-attribs"></div>
+	<div id="simple-click-bind"></div>
+	<div id="mustache-fu"></div>
+	<div id="init-magic"></div>
 	
 	<!-- framework bs -->
 	<script type="text/javascript" src="qunit.js"></script>
@@ -55,31 +58,40 @@
 			});
 		});
 		
-		// 
-		
-		
-		
-		
-		/*
-		module("Module A");
-
-		test("first test within module", function() {
-		  ok( true, "all pass" );
+		test('simple click bind', function() {
+			var msg = "hey that tickles";
+			stop();
+			$("#simple-click-bind").evently({
+			  	click: function(){$(this).text(msg)}
+			});
+			$("#simple-click-bind").trigger('click');
+			start();
+			equals($("#simple-click-bind")[0].innerText, msg);
 		});
-
-		test("second test within module", function() {
-		  ok( true, "all pass" );
-		});
-
-		module("Module B");
-
-		test("some other test", function() {
-		  expect(2);
-		  equals( true, false, "failing test" );
-		  equals( true, true, "passing test" );
-		});
-		*/
 		
+		test('mustache', function() {
+			stop();
+			$("#mustache-fu").evently({
+			  	click:{ data: {name:'handsome'}, mustache:'Hello {{name}}'}
+			});
+			$("#mustache-fu").trigger('click');
+			start();
+			equals($("#mustache-fu")[0].innerText, 'Hello handsome');
+		});
+		
+		// test nested selector love
+		
+		// TODO vulcan mind meld jchris to extract the magic tokens... like failing _init test below... and _changes
+		// http://www.youtube.com/watch?v=4UMxWrwPeto		
+		test('_init magic', function() {
+			var tmpl = "Hello world";
+			stop();
+			$("#init-magic").evently({ 
+				_init: { mustache:tmpl }
+			});
+			start();
+			equals($("#init-magic")[0].innerText, tmpl)
+		});
 	</script>
 </body>
 </html>
