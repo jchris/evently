@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Evently Test Suite</title>
+	<link rel="stylesheet" href="qunit.css" type="text/css" media="screen">
+</head>
+<body>
+	<h1 id="qunit-header">Evently Test Suite</h1>
+	<h2 id="qunit-banner"></h2>
+	<div id="qunit-testrunner-toolbar"></div>
+	<h2 id="qunit-userAgent"></h2>
+	<ol id="qunit-tests"></ol>
+	<div id="qunit-fixture">test markup</div>
+	
+	<div id="test-yehuda-data-attribs"></div>
+	
+	<!-- framework bs -->
+	<script type="text/javascript" src="qunit.js"></script>
+	<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+	
+	<!-- junk we be testing -->
+	<script type="text/javascript" src="../lib/jquery.evently.js"></script>
+	<script type="text/javascript" src="../lib/jquery.mustache.js"></script>
+	<script type="text/javascript" src="../lib/jquery.pathbinder.js"></script>
+	
+	<!-- tests themselves! -->
+	<script type="text/javascript" charset="utf-8">
+	
+		// lets add some tests before I fuck shit up too much
+		module("$$");
+		
+		test("exists", function() {
+			ok($$);
+		});
+		
+		// AND ON THE FIFTH DAY JOHN SAID, "the prototype is sacred".. I guess?
+		test("set/get data", function() {
+			$$('#test-yehuda-data-attribs').foo = 'bar';
+			equals($$('#test-yehuda-data-attribs').foo, 'bar');
+		});
+		
+		module("evently")	
+		
+		test('$.forIn exists', function() {
+			ok($.forIn);
+		});
+		
+		test('forIn walks', function() {
+			var a = {'foo':'bar'};
+			stop();
+			$.forIn(a, function(key, val){
+				start();
+				equals(key, 'foo');
+				equals(val, 'bar');
+			});
+		});
+		
+		// 
+		
+		
+		
+		
+		/*
+		module("Module A");
+
+		test("first test within module", function() {
+		  ok( true, "all pass" );
+		});
+
+		test("second test within module", function() {
+		  ok( true, "all pass" );
+		});
+
+		module("Module B");
+
+		test("some other test", function() {
+		  expect(2);
+		  equals( true, false, "failing test" );
+		  equals( true, true, "passing test" );
+		});
+		*/
+		
+	</script>
+</body>
+</html>
