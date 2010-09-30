@@ -14,6 +14,7 @@
   
   <div id="test-yehuda-data-attribs"></div>
   <div id="simple-click-bind"></div>
+  <div id="before-handler"></div>
   <div id="mustache-fu"></div>
   <div id="init-magic"></div>
   
@@ -67,6 +68,18 @@
       $("#simple-click-bind").trigger('click');
       start();
       equals($("#simple-click-bind")[0].innerText, msg);
+    });
+    
+    test('before', function() {
+      var msg = "before happened";
+      stop();
+      $("#before-handler").evently({
+        _init : {
+          before : function() {$(this).text(msg)}
+        }
+      });
+      start();
+      equals($("#before-handler").text(), msg);
     });
     
     test('mustache', function() {
