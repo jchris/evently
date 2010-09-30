@@ -1,97 +1,97 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Evently Test Suite</title>
-	<link rel="stylesheet" href="qunit.css" type="text/css" media="screen">
+  <title>Evently Test Suite</title>
+  <link rel="stylesheet" href="qunit.css" type="text/css" media="screen">
 </head>
 <body>
-	<h1 id="qunit-header">Evently Test Suite</h1>
-	<h2 id="qunit-banner"></h2>
-	<div id="qunit-testrunner-toolbar"></div>
-	<h2 id="qunit-userAgent"></h2>
-	<ol id="qunit-tests"></ol>
-	<div id="qunit-fixture">test markup</div>
-	
-	<div id="test-yehuda-data-attribs"></div>
-	<div id="simple-click-bind"></div>
-	<div id="mustache-fu"></div>
-	<div id="init-magic"></div>
-	
-	<!-- framework bs -->
-	<script type="text/javascript" src="qunit.js"></script>
-	<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
-	
-	<!-- junk we be testing -->
-	<script type="text/javascript" src="../lib/jquery.evently.js"></script>
-	<script type="text/javascript" src="../lib/jquery.mustache.js"></script>
-	<script type="text/javascript" src="../lib/jquery.pathbinder.js"></script>
-	
-	<!-- tests themselves! -->
-	<script type="text/javascript" charset="utf-8">
-	
-		// lets add some tests before I fuck shit up too much
-		module("$$");
-		
-		test("exists", function() {
-			ok($$);
-		});
-		
-		// AND ON THE FIFTH DAY JOHN SAID, "the prototype is sacred".. I guess?
-		test("set/get data", function() {
-			$$('#test-yehuda-data-attribs').foo = 'bar';
-			equals($$('#test-yehuda-data-attribs').foo, 'bar');
-		});
-		
-		module("evently")	
-		
-		test('$.forIn exists', function() {
-			ok($.forIn);
-		});
-		
-		test('forIn walks', function() {
-			var a = {'foo':'bar'};
-			stop();
-			$.forIn(a, function(key, val){
-				start();
-				equals(key, 'foo');
-				equals(val, 'bar');
-			});
-		});
-		
-		test('simple click bind', function() {
-			var msg = "hey that tickles";
-			stop();
-			$("#simple-click-bind").evently({
-			  	click: function(){$(this).text(msg)}
-			});
-			$("#simple-click-bind").trigger('click');
-			start();
-			equals($("#simple-click-bind")[0].innerText, msg);
-		});
-		
-		test('mustache', function() {
-			stop();
-			$("#mustache-fu").evently({
-			  	click:{ data: {name:'handsome'}, mustache:'<p>Hello {{name}}</p>'}
-			});
-			$("#mustache-fu").trigger('click');
-			start();
-			equals($("#mustache-fu").text(), 'Hello handsome');
-		});
-		
-		// test nested selector love
-		
-		// TODO vulcan mind meld jchris to extract the magic tokens... like failing _init test below... and _changes
-		// http://www.youtube.com/watch?v=4UMxWrwPeto		
-		test('_init magic', function() {
-			var tmpl = "<p>Hello world</p>";
-			stop();
-			$("#init-magic").evently({ 
-				_init: { mustache:tmpl }
-			});
-			start();
-			equals($("#init-magic").html(), tmpl)
-		});
-	</script>
+  <h1 id="qunit-header">Evently Test Suite</h1>
+  <h2 id="qunit-banner"></h2>
+  <div id="qunit-testrunner-toolbar"></div>
+  <h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests"></ol>
+  <div id="qunit-fixture">test markup</div>
+  
+  <div id="test-yehuda-data-attribs"></div>
+  <div id="simple-click-bind"></div>
+  <div id="mustache-fu"></div>
+  <div id="init-magic"></div>
+  
+  <!-- framework bs -->
+  <script type="text/javascript" src="qunit.js"></script>
+  <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+  
+  <!-- junk we be testing -->
+  <script type="text/javascript" src="../lib/jquery.evently.js"></script>
+  <script type="text/javascript" src="../lib/jquery.mustache.js"></script>
+  <script type="text/javascript" src="../lib/jquery.pathbinder.js"></script>
+  
+  <!-- tests themselves! -->
+  <script type="text/javascript" charset="utf-8">
+  
+    // lets add some tests before I fuck shit up too much
+    module("$$");
+    
+    test("exists", function() {
+      ok($$);
+    });
+    
+    // AND ON THE FIFTH DAY JOHN SAID, "the prototype is sacred".. I guess?
+    test("set/get data", function() {
+      $$('#test-yehuda-data-attribs').foo = 'bar';
+      equals($$('#test-yehuda-data-attribs').foo, 'bar');
+    });
+    
+    module("evently") 
+    
+    test('$.forIn exists', function() {
+      ok($.forIn);
+    });
+    
+    test('forIn walks', function() {
+      var a = {'foo':'bar'};
+      stop();
+      $.forIn(a, function(key, val){
+        start();
+        equals(key, 'foo');
+        equals(val, 'bar');
+      });
+    });
+    
+    test('simple click bind', function() {
+      var msg = "hey that tickles";
+      stop();
+      $("#simple-click-bind").evently({
+          click: function(){$(this).text(msg)}
+      });
+      $("#simple-click-bind").trigger('click');
+      start();
+      equals($("#simple-click-bind")[0].innerText, msg);
+    });
+    
+    test('mustache', function() {
+      stop();
+      $("#mustache-fu").evently({
+          click:{ data: {name:'handsome'}, mustache:'<p>Hello {{name}}</p>'}
+      });
+      $("#mustache-fu").trigger('click');
+      start();
+      equals($("#mustache-fu").text(), 'Hello handsome');
+    });
+    
+    // test nested selector love
+    
+    // TODO vulcan mind meld jchris to extract the magic tokens... like failing _init test below... and _changes
+    // http://www.youtube.com/watch?v=4UMxWrwPeto   
+    test('_init magic', function() {
+      var tmpl = "<p>Hello world</p>";
+      stop();
+      $("#init-magic").evently({ 
+        _init: { mustache:tmpl }
+      });
+      start();
+      equals($("#init-magic").html(), tmpl)
+    });
+  </script>
 </body>
 </html>
