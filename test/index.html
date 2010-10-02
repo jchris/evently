@@ -15,6 +15,7 @@
   <div id="test-yehuda-data-attribs"></div>
   <div id="simple-click-bind"></div>
   <div id="before-handler"></div>
+  <div id="async-handler"></div>
   <div id="mustache-fu"></div>
   <div id="init-magic"></div>
   
@@ -80,6 +81,22 @@
       });
       start();
       equals($("#before-handler").text(), msg);
+    });
+    
+    test('async and after', function() {
+      var msg = "async happened";
+      stop();
+      $("#async-handler").evently({
+        _init : {
+          async : function(cb) { cb(msg);},
+          data : function(got) {
+            return {msg:got};
+          },
+          mustache : "<p>{{msg}}</p>",
+          after : start // also tests after handler
+        }
+      });
+      equals($("#async-handler").text(), msg);
     });
     
     test('mustache', function() {
