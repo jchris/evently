@@ -76,7 +76,11 @@
         },10);
       };
       appStub.db = {
-        name : "foobar"
+        name : "foobar",
+        uri : "ok",
+        info : function(ok) {
+          ok.success({update_seq:1})
+        }
       }
       stop();
       var call_count = 0;
