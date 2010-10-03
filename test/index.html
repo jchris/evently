@@ -88,15 +88,20 @@
       stop();
       $("#async-handler").evently({
         _init : {
-          async : function(cb) { cb(msg);},
+          async : function(cb) { 
+            setTimeout(function() {
+              cb(msg);
+              start();
+              equals($("#async-handler").text(), msg);
+            },10);
+          },
           data : function(got) {
             return {msg:got};
           },
-          mustache : "<p>{{msg}}</p>",
-          after : start // also tests after handler
+          mustache : "<p>{{msg}}</p>"
+          // after :  // also tests after handler
         }
       });
-      equals($("#async-handler").text(), msg);
     });
     
     test('mustache', function() {
