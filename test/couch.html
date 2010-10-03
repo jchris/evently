@@ -64,6 +64,42 @@
         }
       }, appStub);
     });
+    
+    test('changes', function() {
+      var tmpl = "<p>Hello {{key}}</p>";
+      var appStub = {};
+      appStub.view = function(n, q, doc) {
+        setTimeout(function() {
+          q.success({
+            rows:[{id:"foo",key:"bar",value:null}]
+          });
+        },10);
+      };
+      appStub.db = {
+        name : "foobar"
+      }
+      stop();
+      var call_count = 0;
+      $("#query-magic").evently({ 
+        _changes: { 
+          mustache:tmpl,
+          data: function(view) {
+            return view.rows[0];
+          },
+          query : {
+            view:"foom",
+            limit : 1
+          },
+          after : function(view) {
+            call_count++;
+            ok(view.rows)
+            equals(view.rows.length, 1)
+            if (call_count > 1) start();
+            equals($("#query-magic").text(), "Hello bar")
+          }
+        }
+      }, appStub);
+    });
   </script>
 </body>
 </html>
