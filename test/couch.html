@@ -31,28 +31,18 @@
   
   <!-- tests themselves! -->
   <script type="text/javascript" charset="utf-8">
-  
-    // lets add some tests before I fuck shit up too much
-    module("$$");
-    test("exists", function() {
-      ok($$);
-    });
-    
-    // AND ON THE FIFTH DAY JOHN SAID, "the prototype is sacred".. I guess?
-    test("set/get data", function() {
-      $$('#test-yehuda-data-attribs').foo = 'bar';
-      equals($$('#test-yehuda-data-attribs').foo, 'bar');
-    });
-    
-    module("evently")
+
+    module("evently.couch")
 
     test('query', function() {
       var tmpl = "<p>Hello {{key}}</p>";
       var appStub = {};
       appStub.view = function(n, q, doc) {
-        q.success({
-          rows:[{id:"foo",key:"bar",value:null}]
-        });
+        setTimeout(function() {
+          q.success({
+            rows:[{id:"foo",key:"bar",value:null}]
+          });
+        },10);
       };
       stop();
       $("#query-magic").evently({ 
