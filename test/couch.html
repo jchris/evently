@@ -67,13 +67,15 @@
     
     test('changes', function() {
       var tmpl = "<p>Hello {{key}}</p>";
+      var call_count = 0;
       var appStub = {};
       appStub.view = function(n, q, doc) {
+        (call_count++)
         setTimeout(function() {
           q.success({
             rows:[{id:"foo",key:"bar",value:null}]
           });
-        },10);
+        },100);
       };
       appStub.db = {
         name : "foobar",
@@ -82,8 +84,10 @@
           ok.success({update_seq:1})
         }
       }
+      $.httpData = function() {
+        return {last_seq:4};
+      };
       stop();
-      var call_count = 0;
       $("#query-magic").evently({ 
         _changes: { 
           mustache:tmpl,
@@ -95,14 +99,17 @@
             limit : 1
           },
           after : function(view) {
-            call_count++;
+            start();
             ok(view.rows)
             equals(view.rows.length, 1)
-            if (call_count > 1) start();
-            equals($("#query-magic").text(), "Hello bar")
+            equals($("#query-magic").text(), "Hello bar");
           }
         }
       }, appStub);
+      setTimeout(function() {
+        alert(call_count)
+      },1000);
+      
     });
   </script>
 </body>
