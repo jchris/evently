@@ -69,13 +69,19 @@
       var tmpl = "<p>Hello {{key}}</p>";
       var call_count = 0;
       var appStub = {};
+      $.ajax = function(opt) {
+        if (call_count++ > 1) return;
+        setTimeout(function() {
+          opt.complete()
+        },1);
+        console.log()
+      };
       appStub.view = function(n, q, doc) {
-        (call_count++)
         setTimeout(function() {
           q.success({
             rows:[{id:"foo",key:"bar",value:null}]
           });
-        },100);
+        },1);
       };
       appStub.db = {
         name : "foobar",
